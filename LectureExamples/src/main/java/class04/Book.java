@@ -6,9 +6,11 @@ public class Book {
 
     // TODO: Declare a class-level int field that will hold the next available number for book IDs
     // Initialize it to 1
+    private static int nextIdNum = 1;
 
     // TODO: Declare a String field for each unique bookId, but do not initialize it
     // Make sure each book's ID cannot be changed after it is set in the constructor
+    private final String bookId;
 
     private String title;
     private String author;
@@ -23,6 +25,7 @@ public class Book {
         this.title = title;
         this.author = author;
         this.numPages = numPages;
+        bookId = generateBookId();
     }
 
     public Book(String title, String author) {
@@ -37,13 +40,23 @@ public class Book {
     // Then customize to make it a meaningful sentence and change the return type to String
 
 
-    // TODO: Add getter for bookId (but no setter since it is final)
 
+    public static String getNextIdNum() {
+        return "\n The next available number for a book ID will be " + nextIdNum;
+    }
+
+
+    // TODO: Add getter for bookId (but no setter since it is final)
+    public String getBookId() {
+        return bookId;
+    }
 
     public String getTitle() {
+
         return title;
     }
     public void setTitle(String title) {
+
         this.title = title;
     }
 
@@ -71,6 +84,11 @@ public class Book {
     // TODO: Write a custom toString() method that nicely formats the book data
     // Use the @Override annotation
 
+    @Override
+    public String toString() {
+        return "\n" + getTitleAndAuthor() + "\n" + numPages + " pages \nID: " + bookId;
+    }
+
 
     // INSTANCE METHODS
 
@@ -79,7 +97,11 @@ public class Book {
     // Use the format (author initials)-(first three letters of title)-(next available number)
     // All letters should be capitalized
     // Increment the next ID number for the class to use next time a new Book object is instantiated
-
+    private String generateBookId(){
+        String id = Utils.getInitials(author) + "-" + title.substring(0,3).toUpperCase() + "-" + nextIdNum;
+        nextIdNum++;
+        return id;
+    }
 
     String getTitleAndAuthor() {
         return title + " by " + author;
